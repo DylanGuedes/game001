@@ -11,29 +11,33 @@
 int main(int argc, char const *argv[])
 {
   Image i;
+  i.set_path("x.bmp");
   Game game;
+  SDL_Event e;
+  bool quit = false;
   if (!game.init()) {
     std::cout << "Failed to initialize" << std::endl;
   } else {
-    if (!game.load_media()) {
+    if (!i.load_path()) {
       std::cout << "Failed to load media" << std::endl;
     } else {
-      bool quit = false;
-      SDL_Event e;
     }
 
+    game.images.push_back(i);
+
     while (!quit) {
-      while (SDL_PoolEvent(&e) != 0) {
+      while (SDL_PollEvent(&e) != 0) {
         if (e.type == SDL_QUIT) {
           quit = true;
         }
       }
 
-      SDL_BlitSurface(game.get_screen_surface(), NULL, game.get_screen_surface(), NULL);
+      SDL_BlitSurface(i.get_surface(), NULL, game.get_screen_surface(), NULL);
 
       SDL_UpdateWindowSurface(game.get_window());
     }
   }
-  return 0;
 
+  game.close();
+  return 0;
 }

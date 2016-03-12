@@ -1,4 +1,5 @@
 #include "game.h"
+#include <list>
 #include <SDL2/SDL.h>
 #include <iostream>
 
@@ -77,5 +78,14 @@ void Game::set_width(int new_w)
 void Game::set_height(int new_h)
 {
   this->height = new_h;
+}
+
+void Game::close()
+{
+  for (auto it : this->images) {
+    SDL_FreeSurface(it.get_surface());
+  }
+  SDL_DestroyWindow(this->get_window());
+  SDL_Quit();
 }
 

@@ -7,6 +7,8 @@
 #endif
 
 #include <iostream>
+#include <list>
+#include "image.h"
 
 class Game
 {
@@ -18,6 +20,7 @@ class Game
     int height;
   public:
 
+    std::list<Image> images;
     void set_window(SDL_Window *);
     SDL_Window *get_window();
     bool init();
@@ -30,6 +33,7 @@ class Game
     void set_width(int);
     int get_height();
     int get_width();
+    void close();
 };
 
 #endif

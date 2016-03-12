@@ -2,6 +2,7 @@
 #define IMAGE_H
 
 #include <iostream>
+#include <SDL2/SDL.h>
 
 class Image
 {
@@ -12,8 +13,7 @@ class Image
   public:
     SDL_Surface *get_surface();
     void set_surface(SDL_Surface *);
-    Image();
-    void load_path();
+    bool load_path();
     void set_path(std::string new_path);
     std::string get_path();
 };
