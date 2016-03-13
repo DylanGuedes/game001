@@ -21,6 +21,7 @@ int main(int argc, char const *argv[])
     if (!i.load_path()) {
       std::cout << "Failed to load media" << std::endl;
     } else {
+      game.load_texture("texture.png");
     }
 
     game.images.push_back(i);
@@ -32,9 +33,13 @@ int main(int argc, char const *argv[])
         }
       }
 
-      SDL_BlitSurface(i.get_surface(), NULL, game.get_screen_surface(), NULL);
+      SDL_RenderClear(game.get_renderer());
 
-      SDL_UpdateWindowSurface(game.get_window());
+      for (auto it : game.textures) {
+        SDL_RenderCopy(game.get_renderer(), it, NULL, NULL);
+      }
+
+      SDL_RenderPresent(game.get_renderer());
     }
   }
 

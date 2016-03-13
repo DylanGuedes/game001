@@ -18,8 +18,9 @@ class Game
     std::string name;
     int width;
     int height;
+    SDL_Renderer *renderer;
   public:
-
+    std::list<SDL_Texture *> textures;
     std::list<Image> images;
     void set_window(SDL_Window *);
     SDL_Window *get_window();
@@ -34,6 +35,12 @@ class Game
     int get_height();
     int get_width();
     void close();
+    void set_renderer(SDL_Renderer *);
+    SDL_Renderer *get_renderer();
+    void add_texture(SDL_Texture *);
+    void load_texture(std::string);
+    void create_renderer();
+
 };
 
 #endif
