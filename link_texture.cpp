@@ -52,10 +52,14 @@ void LinkTexture::free()
   }
 }
 
-void LinkTexture::render(int x, int y)
+void LinkTexture::render(int x, int y, SDL_Rect *clip)
 {
   SDL_Rect render_quad = { x, y, width, height };
-  SDL_RenderCopy(game->get_renderer(), texture, NULL, &render_quad);
+  if (clip != NULL) {
+    render_quad.w = clip->w;
+    render_quad.h = clip->h;
+  }
+  SDL_RenderCopy(game->get_renderer(), texture, clip, &render_quad);
 }
 
 LinkTexture::~LinkTexture()

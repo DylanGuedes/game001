@@ -1,4 +1,4 @@
-FILE = main.cpp game.cpp image.cpp link_texture.cpp
+FILE = main.cpp game.cpp image.cpp link_texture.cpp animation.cpp
 OUTPUT_FILE = game
 COMPILER = g++
 COMPILER_FLAGS = -std=c++11

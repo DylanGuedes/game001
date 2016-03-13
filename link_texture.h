@@ -20,7 +20,7 @@ class LinkTexture
     int get_height();
     int get_width();
     SDL_Texture *get_texture();
-    void render(int x, int y);
+    void render(int x, int y, SDL_Rect *clip = NULL);
     void free();
     void set_game(Game *new_g);
     Game *get_game();
