@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
+#include "link_texture.h"
 
 Game::Game()
 {
@@ -110,10 +111,6 @@ void Game::close()
     SDL_FreeSurface(it.get_surface());
   }
 
-  for (auto it : this->textures) {
-    SDL_DestroyTexture(it);
-  }
-
   SDL_DestroyRenderer(this->get_renderer());
   SDL_DestroyWindow(this->get_window());
 
@@ -121,27 +118,27 @@ void Game::close()
   SDL_Quit();
 }
 
-void Game::add_texture(SDL_Texture *new_texture)
+void Game::add_texture(LinkTexture *new_texture)
 {
   this->textures.push_back(new_texture);
 }
 
 void Game::load_texture(std::string path)
 {
-  SDL_Texture *texture = NULL;
-  SDL_Surface *loaded_surface = IMG_Load(path.c_str());
-  if (loaded_surface == NULL) {
-    std::cout << IMG_GetError();
-  } else {
-    texture = SDL_CreateTextureFromSurface(this->get_renderer(), loaded_surface);
-    if (texture == NULL) {
-      std::cout << SDL_GetError();
-    } else {
-      SDL_FreeSurface(loaded_surface);
-    }
-  }
-
-  this->add_texture(texture);
+  // SDL_Texture *texture = NULL;
+  // SDL_Surface *loaded_surface = IMG_Load(path.c_str());
+  // if (loaded_surface == NULL) {
+  //   std::cout << IMG_GetError();
+  // } else {
+  //   texture = SDL_CreateTextureFromSurface(this->get_renderer(), loaded_surface);
+  //   if (texture == NULL) {
+  //     std::cout << SDL_GetError();
+  //   } else {
+  //     SDL_FreeSurface(loaded_surface);
+  //   }
+  // }
+  //
+  // this->add_texture(texture);
 }
 
 void Game::create_renderer()

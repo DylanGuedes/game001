@@ -8,24 +8,25 @@
 
 #include "image.h"
 #include "game.h"
+#include "link_texture.h"
 
 int main(int argc, char const *argv[])
 {
-  Image i;
-  i.set_path("x.bmp");
   Game game;
   SDL_Event e;
   bool quit = false;
+
   if (!game.init()) {
     std::cout << "Failed to initialize" << std::endl;
   } else {
-    if (!i.load_path()) {
-      std::cout << "Failed to load media" << std::endl;
-    } else {
-      game.load_texture("texture.png");
-    }
 
-    game.images.push_back(i);
+    LinkTexture background;
+    background.set_game(&game);
+    background.load_from_file("background.png");
+
+    LinkTexture ttr1;
+    ttr1.set_game(&game);
+    ttr1.load_from_file("foo.png");
 
     while (!quit) {
       while (SDL_PollEvent(&e) != 0) {
@@ -37,15 +38,8 @@ int main(int argc, char const *argv[])
       SDL_SetRenderDrawColor(game.get_renderer(), 0xFF, 0xFF, 0xFF, 0xFF);
       SDL_RenderClear(game.get_renderer());
 
-      SDL_Rect right_viewport;
-      right_viewport.x = 0;
-      right_viewport.y = 0;
-      right_viewport.w = game.get_width() / 2;
-      right_viewport.h = game.get_height() / 2;
-      SDL_RenderSetViewport(game.get_renderer(), &right_viewport);
-      for (auto it : game.textures) {
-        SDL_RenderCopy(game.get_renderer(), it, NULL, NULL);
-      }
+      background.render(0, 0);
+      ttr1.render(540, 190);
 
       SDL_RenderPresent(game.get_renderer());
     }

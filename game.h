@@ -9,6 +9,7 @@
 #include <iostream>
 #include <list>
 #include "image.h"
+#include "link_texture.h"
 
 class Game
 {
@@ -20,7 +21,7 @@ class Game
     int height;
     SDL_Renderer *renderer;
   public:
-    std::list<SDL_Texture *> textures;
+    std::list<LinkTexture *> textures;
     std::list<Image> images;
     void set_window(SDL_Window *);
     SDL_Window *get_window();
@@ -37,10 +38,9 @@ class Game
     void close();
     void set_renderer(SDL_Renderer *);
     SDL_Renderer *get_renderer();
-    void add_texture(SDL_Texture *);
+    void add_texture(LinkTexture *);
     void load_texture(std::string);
     void create_renderer();
-
 };
 
 #endif
