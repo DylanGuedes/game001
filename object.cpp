@@ -13,7 +13,8 @@ void Object::update()
   // update the frame
   SDL_Rect act = this->texture->frame->updated_frame();
   std::cout << this->texture->frame->actual_frame << " \n\n\n\n";
-  SDL_Rect other = { 0, act.h*this->texture->frame->actual_frame, act.w, act.h};
+  int rect_width = (this->texture->width) / Frame::State::TOTAL;
+  SDL_Rect other = { this->texture->frame->state * rect_width, act.h*this->texture->frame->actual_frame, act.w, act.h};
   // std::cout << "x: " << act.x << ", y: " << act.y << ", height: " << act.h << ", width: " << act.w << std::endl;
 
   // render the actual frame state

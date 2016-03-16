@@ -36,7 +36,19 @@ int main(int argc, char const *argv[])
     while (SDL_PollEvent(&e) != 0) {
       if (e.type == SDL_QUIT) {
         quit = true;
-      } else {
+      } else if (e.type == SDL_KEYDOWN) {
+        switch (e.key.keysym.sym) {
+          case SDLK_LEFT:
+            fYoshi.state = Frame::State::WALKING_LEFT;
+          break;
+
+          case SDLK_RIGHT:
+            fYoshi.state = Frame::State::WALKING_RIGHT;
+          break;
+
+          default:
+          break;
+        }
       }
     }
 
