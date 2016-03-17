@@ -13,6 +13,9 @@ class Object
     Object(int, int, Texture *);
     Texture *texture;
     Window *window;
+    int velx;
+    int vely;
+
 
   private:
 };

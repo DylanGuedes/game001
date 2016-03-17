@@ -5,14 +5,18 @@
 Object::Object(int x, int y, Texture *texture) :
   x(x),
   y(y),
-  texture(texture)
+  texture(texture),
+  velx(0),
+  vely(0)
 { }
 
 void Object::update()
 {
   // update the frame
   SDL_Rect act = this->texture->frame->updated_frame();
-  std::cout << this->texture->frame->actual_frame << " \n\n\n\n";
+  act.x = this->x;
+  act.y = this->y;
+  // std::cout << this->texture->frame->actual_frame << " \n\n\n\n";
   int rect_width = (this->texture->width) / Frame::State::TOTAL;
   SDL_Rect other = { this->texture->frame->state * rect_width, act.h*this->texture->frame->actual_frame, act.w, act.h};
   // std::cout << "x: " << act.x << ", y: " << act.y << ", height: " << act.h << ", width: " << act.w << std::endl;
