@@ -9,7 +9,17 @@ Texture::Texture(Window *window, Frame *frame) :
   path(""),
   get(nullptr),
   frame(frame)
+{}
+
+Texture::Texture(Window *window, Frame *frame, std::string path) :
+  window(window),
+  width(1),
+  height(1),
+  path(path),
+  get(nullptr),
+  frame(frame)
 {
+  this->load_from_path();
 }
 
 bool Texture::load_from_path()

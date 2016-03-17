@@ -18,9 +18,7 @@ int main(int argc, char const *argv[])
   SDL::init();
   Frame fYoshi;
   Window window(640, 480, "Random Game");
-  Texture tYoshi(&window, &fYoshi);
-  tYoshi.path = "yoshi.png";
-  tYoshi.load_from_path();
+  Texture tYoshi(&window, &fYoshi, "yoshi.png");
   Object oYoshi(50, 200, &tYoshi);
 
   fYoshi.aggr_height = tYoshi.height;

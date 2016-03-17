@@ -9,6 +9,7 @@ class Texture
   public:
     Window *window;
     Texture(Window *, Frame *);
+    Texture(Window *, Frame *, std::string);
     int width;
     int height;
     std::string path;
