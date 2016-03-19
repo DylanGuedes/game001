@@ -1,4 +1,4 @@
-FILE = main.cpp window.cpp texture.cpp object.cpp
+FILE = main.cpp window.cpp texture.cpp object.cpp button.cpp
 OUTPUT_FILE = game
 COMPILER = g++
 COMPILER_FLAGS = -std=c++11

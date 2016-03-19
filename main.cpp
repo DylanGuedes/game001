@@ -11,6 +11,7 @@
 #include "texture.hpp"
 #include "object.hpp"
 #include "texture.hpp"
+#include "button.hpp"
 
 int main(int argc, char const *argv[])
 {
@@ -19,6 +20,7 @@ int main(int argc, char const *argv[])
   Window window(640, 480, "Random Game");
   Texture tYoshi(&window, "yoshi.png");
   Object oYoshi(50, 200, Object::State::WALKING_LEFT, &tYoshi, 8, Object::SpriteStyle::COLUMN_STATE);
+  Button button(Button::State::BUTTON_SPRITE_MOUSE_OUT, &oYoshi);
 
   bool quit = false;
   SDL_Event e;
