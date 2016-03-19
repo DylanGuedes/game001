@@ -2,7 +2,6 @@
 #define OBJECT_H
 
 #include "texture.hpp"
-#include "window.hpp"
 
 class Object
 {
@@ -27,7 +26,6 @@ class Object
     int y;
     void update();
     Texture *texture;
-    Window *window;
     int velx;
     int vely;
     int frame_per_action;

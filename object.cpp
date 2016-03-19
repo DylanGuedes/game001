@@ -1,6 +1,5 @@
 #include "object.hpp"
 #include <iostream>
-#include "window.hpp"
 
 /*
    Usage example:
@@ -27,21 +26,27 @@ void Object::update()
   width_per_frame = this->texture->width / Object::State::TOTAL;
   height_per_frame = this->texture->height / this->frame_per_action;
 
+  /*
+    rectangle from texture
+  */
   int position_x = 0;
   int position_y = 0;
 
   position_x = width_per_frame * this->state;
   position_y = height_per_frame * this->actual_frame;
 
+
   SDL_Rect act = {position_x, position_y, width_per_frame, height_per_frame};
-  SDL_Rect other = {position_x, position_y, this->texture->height, this->texture->width};
-  // std::cout << "act: " << position_x << ", " << position_y << ", " << width_per_frame << ", " << height_per_frame << std::endl;
+  /*
+    in what rectangle/where the texture will be rendered:
+  */
+  SDL_Rect other = {this->x, this->y, width_per_frame, height_per_frame};
 
   // render the actual frame state
-  SDL_RenderCopy(this->window->renderer, this->texture->get, &act, &other);
+  SDL_RenderCopy(this->texture->window->renderer, this->texture->get, &act, &other);
 
   // check if needs to reset actual_frame count, updates current frame count
-  if (this->frame_per_action <= (this->actual_frame)) {
+  if (this->frame_per_action <= (this->actual_frame+1)) {
     this->actual_frame = 0;
   } else {
     this->actual_frame += 1;
