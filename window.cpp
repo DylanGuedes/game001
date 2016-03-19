@@ -15,6 +15,10 @@ Window::Window() :
   std::cout << "Empty window started." << std::endl;
 }
 
+/*
+  Usage example:
+  Window window(640, 480, "My Window");
+*/
 Window::Window(int width, int height, std::string title) :
   window(nullptr),
   width(width),

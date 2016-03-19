@@ -1,23 +1,12 @@
 #include "SDL2/SDL_image.h"
 #include "texture.hpp"
-#include "frame.hpp"
 
-Texture::Texture(Window *window, Frame *frame) :
-  window(window),
-  width(1),
-  height(1),
-  path(""),
-  get(nullptr),
-  frame(frame)
-{}
-
-Texture::Texture(Window *window, Frame *frame, std::string path) :
+Texture::Texture(Window *window, std::string path) :
   window(window),
   width(1),
   height(1),
   path(path),
-  get(nullptr),
-  frame(frame)
+  get(nullptr)
 {
   this->load_from_path();
 }

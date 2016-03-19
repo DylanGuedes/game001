@@ -10,22 +10,16 @@
 #include "sdl_modules.hpp"
 #include "texture.hpp"
 #include "object.hpp"
-#include "frame.hpp"
 #include "texture.hpp"
 
 int main(int argc, char const *argv[])
 {
   SDL::init();
-  Frame fYoshi;
-  Window window(640, 480, "Random Game");
-  Texture tYoshi(&window, &fYoshi, "yoshi.png");
-  Object oYoshi(50, 200, &tYoshi);
 
-  fYoshi.aggr_height = tYoshi.height;
-  fYoshi.aggr_width = tYoshi.width;
-  fYoshi.state = Frame::State::WALKING_LEFT;
-  fYoshi.total_frames = 8;
-  fYoshi.actual_frame = 0;
+  Window window(640, 480, "Random Game");
+
+  Texture tYoshi(&window, "yoshi.png");
+  Object oYoshi(50, 200, Object::State::WALKING_LEFT, &tYoshi, 8, Object::SpriteStyle::COLUMN_STATE);
 
   bool quit = false;
   SDL_Event e;
@@ -40,34 +34,38 @@ int main(int argc, char const *argv[])
       } else if (e.type == SDL_KEYDOWN) {
         switch (e.key.keysym.sym) {
           case SDLK_LEFT:
-            fYoshi.state = Frame::State::WALKING_LEFT;
+            oYoshi.state = Object::State::WALKING_LEFT;
             if (oYoshi.x >= 0) {
-              oYoshi.x -= oYoshi.velx;
+              // oYoshi.x -= oYoshi.velx;
             }
           break;
 
           case SDLK_RIGHT:
-            fYoshi.state = Frame::State::WALKING_RIGHT;
+            oYoshi.state = Object::State::WALKING_RIGHT;
             if ((oYoshi.x < window.width)) {
-              oYoshi.x += oYoshi.velx;
+              // oYoshi.x += oYoshi.velx;
             }
           break;
 
           case SDLK_UP:
-            if (oYoshi.y < window.height) {
-              oYoshi.y -= oYoshi.vely;
+            if (oYoshi.y > 0) {
+              // oYoshi.y -= oYoshi.vely;
             }
           break;
 
           case SDLK_DOWN:
-            if (oYoshi.y > 0) {
-              oYoshi.y += oYoshi.vely;
+            if (oYoshi.y <= window.height) {
+              // oYoshi.y += oYoshi.vely;
             }
           break;
 
           default:
           break;
         }
+      } else {
+      //   std::cout << "estado: " << oYoshi.state << std::endl;
+      //   std::cout << "sprite_style: " << oYoshi.sprite_style << std::endl;
+      //   std::cout << "actual_frame: " << oYoshi.actual_frame << std::endl;
       }
     }
 

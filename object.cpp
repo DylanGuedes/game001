@@ -2,33 +2,48 @@
 #include <iostream>
 #include "window.hpp"
 
-Object::Object(int x, int y, Texture *texture) :
-  x(x),
-  y(y),
+/*
+   Usage example:
+   Object oExample(50, 200, &mytexture);
+*/
+Object::Object(int x0, int y0, Object::State initial_state, Texture *texture, int total_frame_per_action, Object::SpriteStyle sprite_style) :
+  state(initial_state),
+  x(x0),
+  y(y0),
   texture(texture),
   velx(0),
-  vely(0)
+  vely(0),
+  actual_frame(0),
+  sprite_style(sprite_style),
+  frame_per_action(total_frame_per_action)
 { }
 
 void Object::update()
 {
   // update the frame
-  SDL_Rect act = this->texture->frame->updated_frame();
-  act.x = this->x;
-  act.y = this->y;
-  // std::cout << this->texture->frame->actual_frame << " \n\n\n\n";
-  int rect_width = (this->texture->width) / Frame::State::TOTAL;
-  SDL_Rect other = { this->texture->frame->state * rect_width, act.h*this->texture->frame->actual_frame, act.w, act.h};
-  // std::cout << "x: " << act.x << ", y: " << act.y << ", height: " << act.h << ", width: " << act.w << std::endl;
+  int width_per_frame = 0;
+  int height_per_frame = 0;
+
+  width_per_frame = this->texture->width / Object::State::TOTAL;
+  height_per_frame = this->texture->height / this->frame_per_action;
+
+  int position_x = 0;
+  int position_y = 0;
+
+  position_x = width_per_frame * this->state;
+  position_y = height_per_frame * this->actual_frame;
+
+  SDL_Rect act = {position_x, position_y, width_per_frame, height_per_frame};
+  SDL_Rect other = {position_x, position_y, this->texture->height, this->texture->width};
+  // std::cout << "act: " << position_x << ", " << position_y << ", " << width_per_frame << ", " << height_per_frame << std::endl;
 
   // render the actual frame state
-  SDL_Texture *mytext = this->texture->get;
-  SDL_RenderCopy(this->texture->window->renderer, this->texture->get, &other, &act);
+  SDL_RenderCopy(this->window->renderer, this->texture->get, &act, &other);
 
-  // check if needs to reset actual_frame count
-  if (this->texture->frame->total_frames <= (this->texture->frame->actual_frame+1 )) {
-    this->texture->frame->actual_frame = 0;
+  // check if needs to reset actual_frame count, updates current frame count
+  if (this->frame_per_action <= (this->actual_frame)) {
+    this->actual_frame = 0;
   } else {
-    this->texture->frame->actual_frame += 1;
+    this->actual_frame += 1;
   }
 }
