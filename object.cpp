@@ -52,3 +52,38 @@ void Object::update()
     this->actual_frame += 1;
   }
 }
+
+void Object::inspect_me(int align)
+{
+  int i;
+  for (i=0; i < align-1; ++i) std::cout << "\t";
+  std::cout << "inspecting object" << std::endl;
+
+  for (i=0; i < align-1; ++i) std::cout << "\t";
+  std::cout << "{" << std::endl;
+
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "state => " << state << std::endl;
+
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "x => " << x << std::endl;
+
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "y => " << y<< std::endl;
+
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "velx => " << velx << std::endl;
+
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "vely  => " << vely<< std::endl;
+
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "actual_frame => " << actual_frame << std::endl;
+
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "frame_per_action => " << frame_per_action << std::endl;
+
+  for (i=0; i < align-1; ++i) std::cout << "\t";
+  std::cout << "{" << std::endl;
+
+}

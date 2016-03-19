@@ -24,6 +24,7 @@ class Button
     int x;
     int y;
     void update();
+    void inspect_me(int);
   private:
 };
 #endif

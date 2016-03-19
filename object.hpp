@@ -30,6 +30,7 @@ class Object
     int vely;
     int frame_per_action;
     int actual_frame;
+    void inspect_me(int);
 
 
   private:

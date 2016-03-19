@@ -24,6 +24,8 @@ int main(int argc, char const *argv[])
   Object oButton(0, 0, Object::State::WALKING_LEFT, &tButton, 1, Object::SpriteStyle::ROW_STATE);
   Button button(Button::State::BUTTON_SPRITE_MOUSE_OUT, &oButton, 300, 200);
 
+  button.inspect_me(1);
+
   bool quit = false;
   SDL_Event e;
 

@@ -65,3 +65,32 @@ void Button::update()
   // std::cout << "button update" << std::endl;
   SDL_RenderCopy(this->object->texture->window->renderer, this->object->texture->get, &sprite, &position);
 }
+
+void Button::inspect_me(int align)
+{
+  int i;
+  for (i=0; i < align-1; ++i) std::cout << "\t";
+  std::cout << "inspecting button" << std::endl;
+
+  for (i=0; i < align-1; ++i) std::cout << "\t";
+  std::cout << "{" << std::endl;
+
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "state => " << state << std::endl;
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "width => " << width << std::endl;
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "height => " << height<< std::endl;
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "x => " << x << std::endl;
+  for (i=0; i < align; ++i) std::cout << "\t";
+  std::cout << "y => " << y<< std::endl;
+
+  this->object->inspect_me(align+1);
+
+
+  for (i=0; i < align-1; ++i) std::cout << "\t";
+  std::cout << "}" << std::endl;
+
+
+}
