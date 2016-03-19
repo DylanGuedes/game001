@@ -17,7 +17,13 @@ class Button
     };
 
     Button::State state;
-    Button(Button::State, Object*);
+    Button(Button::State, Object*, int, int);
+    void handle_event(SDL_Event*);
+    int width;
+    int height;
+    int x;
+    int y;
+    void update();
   private:
 };
 #endif
