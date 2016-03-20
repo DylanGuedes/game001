@@ -32,7 +32,6 @@ class Object
     int actual_frame;
     void inspect_me(int);
 
-
   private:
 };
 

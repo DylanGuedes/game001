@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
 
   Window window(640, 480, "Random Game");
   Texture tYoshi(&window, "yoshi.png");
-  Object oYoshi(50, 200, Object::State::WALKING_LEFT, &tYoshi, 8, Object::SpriteStyle::COLUMN_STATE);
+  Object oYoshi(0, 0, Object::State::WALKING_LEFT, &tYoshi, 8, Object::SpriteStyle::COLUMN_STATE);
   Texture tButton(&window, "button.png");
   Object oButton(0, 0, Object::State::WALKING_LEFT, &tButton, 1, Object::SpriteStyle::ROW_STATE);
   Button button(Button::State::BUTTON_SPRITE_MOUSE_OUT, &oButton, 300, 200);
@@ -33,8 +33,8 @@ int main(int argc, char const *argv[])
   bool quit = false;
   SDL_Event e;
 
-  oYoshi.velx = 40;
-  oYoshi.vely = 40;
+  oYoshi.velx = 0;
+  oYoshi.vely = 0;
 
   Timer fps_counter;
   Timer cap_timer;
@@ -80,9 +80,42 @@ int main(int argc, char const *argv[])
           break;
         }
       } else {
-        button.handle_event(&e);
+            button.handle_event(&e);
+
+
       }
     }
+    int width_per_frame = oYoshi.texture->width / Object::State::TOTAL;
+    int height_per_frame = oYoshi.texture->height / oYoshi.frame_per_action;
+    oYoshi.x += oYoshi.velx;
+    oYoshi.y += oYoshi.vely;
+
+    if (oYoshi.y <= 0 && oYoshi.x >= (window.width - width_per_frame)) {
+      oYoshi.x = 0;
+      oYoshi.y = 0;
+    }
+
+    if (oYoshi.y > (window.height - height_per_frame)) {
+      oYoshi.vely = 0;
+    }
+
+    if (oYoshi.x > (window.width - width_per_frame)){
+      oYoshi.velx = 0;
+    }
+
+
+    if (oYoshi.y < (window.height - height_per_frame)) {
+      if (oYoshi.x == 0) {
+        oYoshi.vely = 1;
+      }
+    } else {
+      if (oYoshi.x < (window.width - width_per_frame)) {
+        oYoshi.velx = 1;
+      } else {
+        oYoshi.vely = -1;
+      }
+    }
+
 
     avg_fps = counted_frames / (fps_counter.get_ticks() / 1000.f);
     if (avg_fps > 2000000) {
