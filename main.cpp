@@ -14,6 +14,9 @@
 #include "button.hpp"
 #include "timer.hpp"
 
+const int SCREEN_FPS = 60;
+const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+
 int main(int argc, char const *argv[])
 {
   SDL::init();
@@ -33,7 +36,15 @@ int main(int argc, char const *argv[])
   oYoshi.velx = 40;
   oYoshi.vely = 40;
 
+  Timer fps_counter;
+  Timer cap_timer;
+  int counted_frames = 0;
+
+  fps_counter.start();
+  float avg_fps = 0;
+
   while (!quit) {
+    cap_timer.start();
     while (SDL_PollEvent(&e) != 0) {
       if (e.type == SDL_QUIT) {
         quit = true;
@@ -70,12 +81,15 @@ int main(int argc, char const *argv[])
         }
       } else {
         button.handle_event(&e);
-        std::cout << "seconds since start: " << (t.get_ticks() / 1000.f) << std::endl;
-      //   std::cout << "estado: " << oYoshi.state << std::endl;
-      //   std::cout << "sprite_style: " << oYoshi.sprite_style << std::endl;
-      //   std::cout << "actual_frame: " << oYoshi.actual_frame << std::endl;
       }
     }
+
+    avg_fps = counted_frames / (fps_counter.get_ticks() / 1000.f);
+    if (avg_fps > 2000000) {
+      avg_fps = 0;
+    }
+    // std::cout << "avg_fps: " << avg_fps << std::endl;
+    ++counted_frames;
 
     SDL_SetRenderDrawColor(window.renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(window.renderer);
@@ -84,6 +98,11 @@ int main(int argc, char const *argv[])
     button.update();
 
     SDL_RenderPresent(window.renderer);
+
+    int frame_ticks = cap_timer.get_ticks();
+    if (frame_ticks < SCREEN_TICKS_PER_FRAME) {
+      SDL_Delay(SCREEN_TICKS_PER_FRAME - frame_ticks);
+    }
   }
 
   tYoshi.close();
