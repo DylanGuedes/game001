@@ -12,6 +12,7 @@
 #include "object.hpp"
 #include "texture.hpp"
 #include "button.hpp"
+#include "timer.hpp"
 
 int main(int argc, char const *argv[])
 {
@@ -69,6 +70,7 @@ int main(int argc, char const *argv[])
         }
       } else {
         button.handle_event(&e);
+        std::cout << "seconds since start: " << (t.get_ticks() / 1000.f) << std::endl;
       //   std::cout << "estado: " << oYoshi.state << std::endl;
       //   std::cout << "sprite_style: " << oYoshi.sprite_style << std::endl;
       //   std::cout << "actual_frame: " << oYoshi.actual_frame << std::endl;
