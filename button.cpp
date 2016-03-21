@@ -4,15 +4,16 @@ Button::Button(Button::State init_state, Object *object, int width, int height) 
   object(object),
   state(init_state),
   width(width),
-  height(height)
+  height(height),
+  action(Button::Action::SPAWN_MONSTER)
 {
   this->x = object->x;
   this->y = object->y;
-
 }
 
-void Button::handle_event(SDL_Event *e)
+bool Button::handle_event(SDL_Event *e)
 {
+  bool do_action = false;
   if (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP) {
     int x_pos, y_pos;
     SDL_GetMouseState(&x_pos, &y_pos);
@@ -37,6 +38,7 @@ void Button::handle_event(SDL_Event *e)
 
         case SDL_MOUSEBUTTONDOWN:
           this->state = Button::State::BUTTON_SPRITE_MOUSE_DOWN;
+          do_action = true;
         break;
 
         case SDL_MOUSEBUTTONUP:
@@ -45,6 +47,8 @@ void Button::handle_event(SDL_Event *e)
       }
     }
   }
+
+  return do_action;
 }
 
 void Button::update()

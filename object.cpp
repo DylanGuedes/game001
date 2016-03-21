@@ -26,6 +26,9 @@ void Object::update()
   width_per_frame = this->texture->width / Object::State::TOTAL;
   height_per_frame = this->texture->height / this->frame_per_action;
 
+  std::cout << "textura: " << this->texture->width << std::endl;
+
+
   /*
     rectangle from texture
   */
@@ -43,6 +46,11 @@ void Object::update()
   SDL_Rect other = {this->x, this->y, width_per_frame, height_per_frame};
 
   // render the actual frame state
+  std::cout << "ACT: " << act.x << " , " << act.y << " , " << act.h << " , " << act.w << "\n\n\n\n\n";
+
+  std::cout << "other: " << other.x << " , " << other.y << " , " << other.h << " , " << other.w << "\n\n\n\n\n";
+
+  std::cout << "calculo do width \n\n\n\n";
   SDL_RenderCopy(this->texture->window->renderer, this->texture->get, &act, &other);
 
   // check if needs to reset actual_frame count, updates current frame count

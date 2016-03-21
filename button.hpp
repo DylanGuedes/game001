@@ -16,9 +16,14 @@ class Button
       BUTTON_SPRITE_TOTAL = 4
     };
 
+    enum Action {
+      SPAWN_MONSTER = 0
+    };
+
+    Button::Action action;
     Button::State state;
     Button(Button::State, Object*, int, int);
-    void handle_event(SDL_Event*);
+    bool handle_event(SDL_Event*);
     int width;
     int height;
     int x;
