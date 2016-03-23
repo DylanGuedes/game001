@@ -6,6 +6,8 @@
 #include <SDL2/SDL_image.h>
 #endif
 
+#include <fstream>
+
 #include "window.hpp"
 #include "sdl_modules.hpp"
 #include "texture.hpp"
@@ -13,10 +15,14 @@
 #include "texture.hpp"
 #include "button.hpp"
 #include "timer.hpp"
+#include "tile.hpp"
 #include <vector>
 
 const int SCREEN_FPS = 60;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+
+const int TILE_WIDTH = 40;
+const int TILE_HEIGHT = 40;
 
 int main(int argc, char const *argv[])
 {
@@ -26,6 +32,41 @@ int main(int argc, char const *argv[])
   Texture tButton(&window, "button.png");
   Object oButton(0, 100, Object::State::WALKING_LEFT, &tButton, 1, Object::SpriteStyle::ROW_STATE);
   Button button(Button::State::BUTTON_SPRITE_MOUSE_OUT, &oButton, 300, 200);
+  /* load map */
+  std::ifstream map_data;
+  map_data.open("game_files/map.data", std::ifstream::in);
+
+  char buffer_map = map_data.get();
+
+  int column_counter = 0;
+  int row_counter = 0;
+
+  std::vector< std::pair<int, SDL_Rect*> > tile_rects;
+
+  while (map_data.good()) {
+    std::cout << buffer_map;
+    buffer_map = map_data.get();
+
+    if (buffer_map == 0) {
+      column_counter += 1;
+    } else if (buffer_map == '\n') {
+      column_counter = 0;
+      row_counter += 1;
+    } else {
+      column_counter += 1;
+    }
+
+    SDL_Rect *tmpRect = new SDL_Rect;
+
+    tmpRect->x = TILE_WIDTH * column_counter;
+    tmpRect->y = TILE_HEIGHT * row_counter;
+    tmpRect->h = TILE_HEIGHT;
+    tmpRect->w = TILE_WIDTH;
+
+    tile_rects.push_back(tmpRect);
+  }
+
+  map_data.close();
 
   std::vector<Object*> yoshiList;
 
@@ -90,6 +131,7 @@ int main(int argc, char const *argv[])
       }
     }
 
+
     for (auto oYoshi : yoshiList) {
       int width_per_frame = oYoshi->texture->width / Object::State::TOTAL;
       int height_per_frame = oYoshi->texture->height / oYoshi->frame_per_action;
@@ -134,6 +176,11 @@ int main(int argc, char const *argv[])
     SDL_SetRenderDrawColor(window.renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(window.renderer);
 
+    for (auto it : tile_rects) {
+      SDL_SetRenderDrawColor(window.renderer, 0x00, 0x00, 0xFF, 0xFF);
+      SDL_RenderFillRect(window.renderer, it);
+    }
+
     for (auto it : yoshiList) {
       it->update();
     }
@@ -156,6 +203,7 @@ int main(int argc, char const *argv[])
     delete it->texture;
     delete it;
   }
+
   window.close();
   SDL::quit();
   return 0;

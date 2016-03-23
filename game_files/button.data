@@ -1,0 +1,5 @@
+["Button1"]
+path = button.png
+init_position = (25, 25)
+frames_per_action = 1
+sprite_style = row_state

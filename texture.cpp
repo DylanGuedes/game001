@@ -9,7 +9,6 @@ Texture::Texture(Window *window, std::string path) :
   get(nullptr)
 {
   this->load_from_path();
-  std::cout << "textura: " << this->width << std::endl;
 }
 
 bool Texture::load_from_path()

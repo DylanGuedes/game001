@@ -1,0 +1,6 @@
+["Unit1"]
+path = yoshi.png
+init_position = (0, 0)
+frames_per_action = 8
+sprite_style = column_state
+
