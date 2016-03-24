@@ -17,11 +17,11 @@ class Object
       ROW_STATE = 1
     };
 
-    Object(int x0, int y0, Object::State initial_State, Texture*, int total_frame, Object::SpriteStyle);
+    Object(int x0, int y0, Object::State initial_State, Texture*, int total_frame, Object::SpriteStyle, int);
 
     State state;
     SpriteStyle sprite_style;
-
+    int total_states;
     int x;
     int y;
     void update();

@@ -5,7 +5,7 @@
    Usage example:
    Object oExample(50, 200, &mytexture);
 */
-Object::Object(int x0, int y0, Object::State initial_state, Texture *texture, int total_frame_per_action, Object::SpriteStyle sprite_style) :
+Object::Object(int x0, int y0, Object::State initial_state, Texture *texture, int total_frame_per_action, Object::SpriteStyle sprite_style, int total_states) :
   state(initial_state),
   x(x0),
   y(y0),
@@ -13,6 +13,7 @@ Object::Object(int x0, int y0, Object::State initial_state, Texture *texture, in
   velx(0),
   vely(0),
   actual_frame(0),
+  total_states(total_states),
   sprite_style(sprite_style),
   frame_per_action(total_frame_per_action)
 { }
@@ -23,23 +24,27 @@ void Object::update()
   int width_per_frame = 0;
   int height_per_frame = 0;
 
-  width_per_frame = this->texture->width / Object::State::TOTAL;
-  height_per_frame = this->texture->height / this->frame_per_action;
 
   /*
     rectangle from texture
   */
-  int position_x = 0;
-  int position_y = 0;
 
-  position_x = width_per_frame * this->state;
-  position_y = height_per_frame * this->actual_frame;
+  int position_x = 0, position_y = 0;
 
+  if (this->sprite_style == Object::SpriteStyle::COLUMN_STATE) {
+    width_per_frame = this->texture->width / this->total_states;
+    height_per_frame = this->texture->height / this->frame_per_action;
+    position_x = width_per_frame * this->state;
+    position_y = height_per_frame * this->actual_frame;
+  } else {
+    width_per_frame = this->texture->width / this->frame_per_action;
+    height_per_frame = this->texture->height / this->total_states;
+    std::cout << "width per frame: " << width_per_frame << " , height per frame: " << height_per_frame << std::endl;
+    position_x = width_per_frame * this->actual_frame;
+    position_y = height_per_frame * this->state;
+  }
 
   SDL_Rect act = {position_x, position_y, width_per_frame, height_per_frame};
-  /*
-    in what rectangle/where the texture will be rendered:
-  */
   SDL_Rect other = {this->x, this->y, width_per_frame, height_per_frame};
 
   // render the actual frame state
